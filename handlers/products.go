@@ -1,3 +1,17 @@
+// Package Classification  of Product API
+//
+// Documentation for product api
+//
+// Schemes: http
+// BasePath: /
+//
+// Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+// swagger:meta
+
 package handlers
 
 import (
