@@ -6,9 +6,10 @@ import (
 	"github.com/cesarvspr/golang-modules/product-api/data"
 )
 
-func (p *Products) AddProduct(rw http.ResponseWriter, r *http.Request) {
-	p.l.Println("Handle POST Product")
+func (p *Products) Create(rw http.ResponseWriter, r *http.Request) {
+	// fetch the product from the context
 	prod := r.Context().Value(KeyProduct{}).(data.Product)
 
-	data.AddProduct(&prod)
+	p.l.Printf("[DEBUG] Inserting product: %#v\n", prod)
+	data.AddProduct(prod)
 }

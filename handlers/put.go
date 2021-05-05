@@ -8,8 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type KeyProduct struct{}
-
 func (p Products) UpdateProducts(rw http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)

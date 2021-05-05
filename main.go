@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/cesarvspr/golang-modules/handlers"
+	"github.com/cesarvspr/golang-modules/product-api/data"
 	"github.com/gorilla/mux"
 )
 
@@ -30,22 +31,24 @@ func main() {
 	//profilfer ends here
 
 	l := log.New(os.Stdout, "product-api", log.LstdFlags)
+	v := data.NewValidation()
 
 	//create handlers
-	ph := handlers.NewProducts(l)
+	ph := handlers.NewProducts(l, v)
 
 	//create new serve mux and register the handlers
 	sm := mux.NewRouter()
-
+	// handlers for API
 	getRouter := sm.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/", ph.GetProducts)
+	getRouter.HandleFunc("/products", ph.ListAll)
+	getRouter.HandleFunc("/products/{id:[0-9]+}", ph.ListSingle)
 
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
 	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProducts)
 	putRouter.Use(ph.MiddlewareValidateProduct)
 
 	postRouter := sm.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/", ph.AddProduct)
+	postRouter.HandleFunc("/", ph.Create)
 	postRouter.Use(ph.MiddlewareValidateProduct)
 
 	s := &http.Server{
