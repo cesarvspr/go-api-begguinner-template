@@ -51,6 +51,9 @@ func main() {
 	postRouter.HandleFunc("/", ph.Create)
 	postRouter.Use(ph.MiddlewareValidateProduct)
 
+	deleteR := sm.Methods(http.MethodDelete).Subrouter()
+	deleteR.HandleFunc("/products/{id:[0-9]+}", ph.Delete)
+
 	s := &http.Server{
 		Addr:         ":9000",
 		Handler:      sm,
