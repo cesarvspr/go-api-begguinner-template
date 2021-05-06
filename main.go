@@ -10,6 +10,8 @@ import (
 	"runtime/pprof"
 	"time"
 
+	"github.com/go-openapi/runtime/middleware"
+
 	"github.com/cesarvspr/golang-modules/handlers"
 	"github.com/cesarvspr/golang-modules/product-api/data"
 	"github.com/gorilla/mux"
@@ -54,6 +56,13 @@ func main() {
 	deleteR := sm.Methods(http.MethodDelete).Subrouter()
 	deleteR.HandleFunc("/products/{id:[0-9]+}", ph.Delete)
 
+	// handler for documentation
+	opts := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
+	sh := middleware.Redoc(opts, nil)
+
+	getRouter.Handle("/docs", sh)
+	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
+
 	s := &http.Server{
 		Addr:         ":9000",
 		Handler:      sm,
@@ -64,11 +73,8 @@ func main() {
 
 	go func() {
 		l.Println("starting server on port :9000")
-		err := s.ListenAndServe()
-		if err != nil {
-			l.Println(err)
-			os.Exit(1)
-
+		if err = s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen:%+s\n", err)
 		}
 	}()
 

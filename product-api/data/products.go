@@ -21,6 +21,7 @@ type Product struct {
 
 type Products []*Product
 
+// GetProducts returns all products from the database
 func GetProducts() Products {
 	return productList
 }
