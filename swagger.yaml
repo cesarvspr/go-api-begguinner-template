@@ -1,6 +1,43 @@
 basePath: /
 consumes:
 - application/json
+definitions:
+  Product:
+    description: Product defines the structure for an API product
+    properties:
+      description:
+        description: the description for this poduct
+        maxLength: 10000
+        type: string
+        x-go-name: Description
+      id:
+        description: the id for the product
+        format: int64
+        minimum: 1
+        type: integer
+        x-go-name: ID
+      name:
+        description: the name for this poduct
+        maxLength: 255
+        type: string
+        x-go-name: Name
+      price:
+        description: the price for the product
+        format: float
+        minimum: 0.01
+        type: number
+        x-go-name: Price
+      sku:
+        description: the SKU for the product
+        pattern: '[a-z]+-[a-z]+-[a-z]+'
+        type: string
+        x-go-name: SKU
+    required:
+    - name
+    - price
+    - sku
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/product-api/data
 info:
   description: Documentation for Product API
   title: of Product API
@@ -18,6 +55,15 @@ paths:
     post:
       description: Create a new product
       operationId: createProduct
+      parameters:
+      - description: |-
+          Product data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
       responses:
         "200":
           $ref: '#/responses/productResponse'
@@ -31,6 +77,14 @@ paths:
       description: Update a products details
       operationId: updateProduct
       parameters:
+      - description: |-
+          Product data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
       - description: The id of the product for which the operation relates
         format: int64
         in: path
@@ -82,24 +136,31 @@ responses:
           x-go-name: Message
       type: object
   errorValidation:
-    description: Validation errors defined as an array of strings
+    description: |-
+      Validation errors defined as an array of strings
+      ValidationError is a collection of validation error messages
     schema:
       properties:
         messages:
-          description: The validation message
           items:
             type: string
           type: array
           x-go-name: Messages
-      required:
-      - messages
       type: object
   noContentResponse:
     description: No content is returned by this API endpoint
+    headers:
+      Body: {}
+    schema:
+      $ref: '#/definitions/Product'
   productResponse:
     description: Data structure representing a single product
+    schema:
+      $ref: '#/definitions/Product'
   productsResponse:
     description: A list of products
+    schema:
+      $ref: '#/definitions/Product'
 schemes:
 - http
 swagger: "2.0"

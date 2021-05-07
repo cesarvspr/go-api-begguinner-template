@@ -72,7 +72,7 @@ func main() {
 	}
 
 	go func() {
-		l.Println("starting server on port :9000")
+		l.Println("starting server on port", s.Addr)
 		if err = s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen:%+s\n", err)
 		}

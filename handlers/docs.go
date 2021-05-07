@@ -15,6 +15,8 @@
 // swagger:meta
 package handlers
 
+import "github.com/cesarvspr/golang-modules/product-api/data"
+
 //
 // NOTE: Types defined here are purely for documentation purposes
 // these types are not used by any of the handers
@@ -22,26 +24,21 @@ package handlers
 // Generic error message returned as a string
 // swagger:response errorResponse
 type errorResponseWrapper struct {
-	// Description of the
+	// Description of the error
+	// GenericError is a generic error message returned by a server
 	// in: body
-	Body struct {
-		// The validation message
-		// Expected type int
-		// Required: true
-
+	body struct {
 		Message string `json:"message"`
 	}
 }
 
 // Validation errors defined as an array of strings
+// ValidationError is a collection of validation error messages
 // swagger:response errorValidation
 type errorValidationWrapper struct {
 	// Collection of the errors
 	// in: body
 	Body struct {
-		// The validation message
-		//
-		// Required: true
 		Messages []string `json:"messages"`
 	}
 }
@@ -51,7 +48,7 @@ type errorValidationWrapper struct {
 type productsResponseWrapper struct {
 	// All current products
 	// in: body
-
+	Body data.Product
 }
 
 // Data structure representing a single product
@@ -59,12 +56,13 @@ type productsResponseWrapper struct {
 type productResponseWrapper struct {
 	// Newly created product
 	// in: body
-
+	Body data.Product
 }
 
 // No content is returned by this API endpoint
 // swagger:response noContentResponse
 type noContentResponseWrapper struct {
+	Body data.Product
 }
 
 // swagger:parameters updateProduct createProduct
@@ -73,7 +71,7 @@ type productParamsWrapper struct {
 	// Note: the id field is ignored by update and create operations
 	// in: body
 	// required: true
-
+	Body data.Product
 }
 
 // swagger:parameters updateProduct
