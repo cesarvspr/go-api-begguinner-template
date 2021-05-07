@@ -46,7 +46,7 @@ func main() {
 	getRouter.HandleFunc("/products/{id:[0-9]+}", ph.ListSingle)
 
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
-	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProducts)
+	putRouter.HandleFunc("/{id:[0-9]+}", ph.Update)
 	putRouter.Use(ph.MiddlewareValidateProduct)
 
 	postRouter := sm.Methods(http.MethodPost).Subrouter()
@@ -64,7 +64,7 @@ func main() {
 	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
 
 	s := &http.Server{
-		Addr:         ":9000",
+		Addr:         ":9001",
 		Handler:      sm,
 		IdleTimeout:  120 + time.Second,
 		ReadTimeout:  1 * time.Second,

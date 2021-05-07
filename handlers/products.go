@@ -1,18 +1,3 @@
-// Package classification of Product API
-//
-// Documentation for Product API
-//
-//	Schemes: http
-//	BasePath: /
-//	Version: 1.0.0
-//
-//	Consumes:
-//	- application/json
-//
-//	Produces:
-//	- application/lsjson
-//
-// swagger:meta
 package handlers
 
 import (
@@ -69,5 +54,3 @@ func getProductID(r *http.Request) int {
 
 	return id
 }
-
-

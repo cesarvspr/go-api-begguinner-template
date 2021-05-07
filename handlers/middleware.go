@@ -7,6 +7,7 @@ import (
 	"github.com/cesarvspr/golang-modules/product-api/data"
 )
 
+// MiddlewareValidateProduct validates the product in the request and calls next if ok
 func (p Products) MiddlewareValidateProduct(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		prod := &data.Product{}
@@ -17,6 +18,8 @@ func (p Products) MiddlewareValidateProduct(next http.Handler) http.Handler {
 			http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
 			return
 		}
+
+		// validate the product
 		errs := p.v.Validate(prod)
 		if len(errs) != 0 {
 			p.l.Println("[ERROR] validating product", errs)
@@ -26,10 +29,10 @@ func (p Products) MiddlewareValidateProduct(next http.Handler) http.Handler {
 			data.ToJSON(&ValidationError{Messages: errs.Errors()}, rw)
 			return
 		}
-
+		// add the product to the context
 		ctx := context.WithValue(r.Context(), KeyProduct{}, prod)
 		r = r.WithContext(ctx)
-
+		// Call the next handler, which can be another middleware in the chain, or the final handler.
 		next.ServeHTTP(rw, r)
 	})
 }
