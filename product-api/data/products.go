@@ -2,7 +2,6 @@ package data
 
 import (
 	"fmt"
-	"time"
 )
 
 // ErrProductNotFound is an error raised when a product can not be found in the database
@@ -39,10 +38,7 @@ type Product struct {
 	//
 	// required: true
 	// pattern: [a-z]+-[a-z]+-[a-z]+
-	SKU       string `json:"sku" validate:"sku"`
-	CreatedOn string `json:"-"`
-	UpdatedOn string `json:"-"`
-	DeletedON string `json:"-"`
+	SKU string `json:"sku" validate:"sku"`
 }
 
 type Products []*Product
@@ -60,30 +56,25 @@ func AddProduct(p Product) {
 	productList = append(productList, &p)
 }
 
-func getNextID() int {
-	lp := productList[len(productList)-1]
-	return lp.ID + 1
-}
-
 // UpdateProduct replaces a product in the database with the given
 // item.
 // If a product with the given id does not exist in the database
 // this function returns a ProductNotFound error
-func UpdateProduct(id int, p *Product) error {
-	_, pos, err := findProduct(id)
-	if err != nil {
-		return err
+func UpdateProduct(p Product) error {
+	i := findIndexByProductID(p.ID)
+	if i == -1 {
+		return ErrProductNotFound
 	}
-	p.ID = id
-	productList[pos] = p
-	return nil
 
+	// update the product in the DB
+	productList[i] = &p
+
+	return nil
 }
 
-// getProductID returns the product ID from the URL
-// Panics if cannot convert the id into an integer
-// this should never happen as the router ensures that
-// this is a valid number
+// GetProductByID returns a single product which matches the id from the
+// database.
+// If a product is not found this function returns a ProductNotFound error
 func GetProductByID(id int) (*Product, error) {
 	i := findIndexByProductID(id)
 	if id == -1 {
@@ -93,6 +84,8 @@ func GetProductByID(id int) (*Product, error) {
 	return productList[i], nil
 }
 
+// findIndex finds the index of a product in the database
+// returns -1 when no product can be found
 func findIndexByProductID(id int) int {
 	for i, p := range productList {
 		if p.ID == id {
@@ -101,15 +94,6 @@ func findIndexByProductID(id int) int {
 	}
 
 	return -1
-}
-
-func findProduct(id int) (*Product, int, error) {
-	for i, p := range productList {
-		if p.ID == id {
-			return p, i, nil
-		}
-	}
-	return nil, -1, ErrProductNotFound
 }
 
 // DeleteProduct deletes a product from the database
@@ -131,16 +115,12 @@ var productList = []*Product{
 		Description: "Frothy milky coffee",
 		Price:       2.45,
 		SKU:         "abc323",
-		CreatedOn:   time.Now().UTC().String(),
-		UpdatedOn:   time.Now().UTC().String(),
 	},
 	&Product{
 		ID:          2,
-		Name:        "Espresso",
+		Name:        "Esspresso",
 		Description: "Short and strong coffee without milk",
 		Price:       1.99,
 		SKU:         "fjd34",
-		CreatedOn:   time.Now().UTC().String(),
-		UpdatedOn:   time.Now().UTC().String(),
 	},
 }

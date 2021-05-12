@@ -2,8 +2,56 @@ basePath: /
 consumes:
 - application/json
 definitions:
+  CreateProductNotImplementedBody:
+    description: CreateProductNotImplementedBody create product not implemented body
+    properties:
+      message:
+        description: message
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
+  CreateProductUnprocessableEntityBody:
+    description: CreateProductUnprocessableEntityBody create product unprocessable
+      entity body
+    properties:
+      messages:
+        description: messages
+        items:
+          type: string
+        type: array
+        x-go-name: Messages
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
+  DeleteProductNotFoundBody:
+    description: DeleteProductNotFoundBody delete product not found body
+    properties:
+      message:
+        description: message
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
+  DeleteProductNotImplementedBody:
+    description: DeleteProductNotImplementedBody delete product not implemented body
+    properties:
+      message:
+        description: message
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
+  ListSingleProductNotFoundBody:
+    description: ListSingleProductNotFoundBody list single product not found body
+    properties:
+      message:
+        description: message
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
   Product:
-    description: Product defines the structure for an API product
+    description: Product Product defines the structure for an API product
     properties:
       description:
         description: the description for this poduct
@@ -37,7 +85,28 @@ definitions:
     - price
     - sku
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/product-api/data
+    x-go-package: github.com/cesarvspr/golang-modules/models
+  UpdateProductNotFoundBody:
+    description: UpdateProductNotFoundBody update product not found body
+    properties:
+      message:
+        description: message
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
+  UpdateProductUnprocessableEntityBody:
+    description: UpdateProductUnprocessableEntityBody update product unprocessable
+      entity body
+    properties:
+      messages:
+        description: messages
+        items:
+          type: string
+        type: array
+        x-go-name: Messages
+    type: object
+    x-go-package: github.com/cesarvspr/golang-modules/client/products
 info:
   description: Documentation for Product API
   title: of Product API
@@ -85,13 +154,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/Product'
-      - description: The id of the product for which the operation relates
-        format: int64
-        in: path
-        name: id
-        required: true
-        type: integer
-        x-go-name: ID
       responses:
         "201":
           $ref: '#/responses/noContentResponse'
@@ -105,6 +167,14 @@ paths:
     delete:
       description: Update a products details
       operationId: deleteProduct
+      parameters:
+      - description: The id of the product for which the operation relates
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
       responses:
         "201":
           $ref: '#/responses/noContentResponse'
@@ -116,7 +186,15 @@ paths:
       - products
     get:
       description: Return a list of products from the database
-      operationId: listSingle
+      operationId: listSingleProduct
+      parameters:
+      - description: The id of the product for which the operation relates
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
       responses:
         "200":
           $ref: '#/responses/productResponse'
@@ -149,10 +227,6 @@ responses:
       type: object
   noContentResponse:
     description: No content is returned by this API endpoint
-    headers:
-      Body: {}
-    schema:
-      $ref: '#/definitions/Product'
   productResponse:
     description: Data structure representing a single product
     schema:
