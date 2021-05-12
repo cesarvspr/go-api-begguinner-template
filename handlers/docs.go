@@ -48,7 +48,7 @@ type errorValidationWrapper struct {
 type productsResponseWrapper struct {
 	// All current products
 	// in: body
-	Body data.Product
+	Body []data.Product
 }
 
 // Data structure representing a single product
@@ -56,7 +56,7 @@ type productsResponseWrapper struct {
 type productResponseWrapper struct {
 	// Newly created product
 	// in: body
-	Body data.Product
+	Body []data.Product
 }
 
 // No content is returned by this API endpoint

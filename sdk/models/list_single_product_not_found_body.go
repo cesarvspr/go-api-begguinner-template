@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// ListSingleProductNotFoundBody ListSingleProductNotFoundBody list single product not found body
+// ListSingleProductNotFoundBody ListSingleProductNotFoundBody ListSingleProductNotFoundBody list single product not found body
 //
 // swagger:model ListSingleProductNotFoundBody
 type ListSingleProductNotFoundBody struct {

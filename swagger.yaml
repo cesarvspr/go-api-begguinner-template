@@ -10,10 +10,10 @@ definitions:
         type: string
         x-go-name: Message
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/client/products
   CreateProductUnprocessableEntityBody:
-    description: CreateProductUnprocessableEntityBody create product unprocessable
-      entity body
+    description: CreateProductUnprocessableEntityBody CreateProductUnprocessableEntityBody
+      create product unprocessable entity body
     properties:
       messages:
         description: messages
@@ -22,16 +22,17 @@ definitions:
         type: array
         x-go-name: Messages
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/models
   DeleteProductNotFoundBody:
-    description: DeleteProductNotFoundBody delete product not found body
+    description: DeleteProductNotFoundBody DeleteProductNotFoundBody DeleteProductNotFoundBody
+      delete product not found body
     properties:
       message:
         description: message
         type: string
         x-go-name: Message
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/models
   DeleteProductNotImplementedBody:
     description: DeleteProductNotImplementedBody delete product not implemented body
     properties:
@@ -40,18 +41,19 @@ definitions:
         type: string
         x-go-name: Message
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/client/products
   ListSingleProductNotFoundBody:
-    description: ListSingleProductNotFoundBody list single product not found body
+    description: ListSingleProductNotFoundBody ListSingleProductNotFoundBody list
+      single product not found body
     properties:
       message:
         description: message
         type: string
         x-go-name: Message
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/models
   Product:
-    description: Product Product defines the structure for an API product
+    description: Product defines the structure for an API product
     properties:
       description:
         description: the description for this poduct
@@ -85,19 +87,20 @@ definitions:
     - price
     - sku
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/models
+    x-go-package: github.com/cesarvspr/golang-modules/product-api/data
   UpdateProductNotFoundBody:
-    description: UpdateProductNotFoundBody update product not found body
+    description: UpdateProductNotFoundBody UpdateProductNotFoundBody update product
+      not found body
     properties:
       message:
         description: message
         type: string
         x-go-name: Message
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/models
   UpdateProductUnprocessableEntityBody:
-    description: UpdateProductUnprocessableEntityBody update product unprocessable
-      entity body
+    description: UpdateProductUnprocessableEntityBody UpdateProductUnprocessableEntityBody
+      UpdateProductUnprocessableEntityBody update product unprocessable entity body
     properties:
       messages:
         description: messages
@@ -106,7 +109,7 @@ definitions:
         type: array
         x-go-name: Messages
     type: object
-    x-go-package: github.com/cesarvspr/golang-modules/client/products
+    x-go-package: github.com/cesarvspr/golang-modules/sdk/models
 info:
   description: Documentation for Product API
   title: of Product API
@@ -230,11 +233,15 @@ responses:
   productResponse:
     description: Data structure representing a single product
     schema:
-      $ref: '#/definitions/Product'
+      items:
+        $ref: '#/definitions/Product'
+      type: array
   productsResponse:
     description: A list of products
     schema:
-      $ref: '#/definitions/Product'
+      items:
+        $ref: '#/definitions/Product'
+      type: array
 schemes:
 - http
 swagger: "2.0"

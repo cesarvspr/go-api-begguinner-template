@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DeleteProductNotFoundBody DeleteProductNotFoundBody delete product not found body
+// DeleteProductNotFoundBody DeleteProductNotFoundBody DeleteProductNotFoundBody DeleteProductNotFoundBody delete product not found body
 //
 // swagger:model DeleteProductNotFoundBody
 type DeleteProductNotFoundBody struct {

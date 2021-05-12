@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// UpdateProductNotFoundBody UpdateProductNotFoundBody update product not found body
+// UpdateProductNotFoundBody UpdateProductNotFoundBody UpdateProductNotFoundBody update product not found body
 //
 // swagger:model UpdateProductNotFoundBody
 type UpdateProductNotFoundBody struct {

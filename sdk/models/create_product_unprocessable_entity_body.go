@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// CreateProductUnprocessableEntityBody CreateProductUnprocessableEntityBody create product unprocessable entity body
+// CreateProductUnprocessableEntityBody CreateProductUnprocessableEntityBody CreateProductUnprocessableEntityBody create product unprocessable entity body
 //
 // swagger:model CreateProductUnprocessableEntityBody
 type CreateProductUnprocessableEntityBody struct {

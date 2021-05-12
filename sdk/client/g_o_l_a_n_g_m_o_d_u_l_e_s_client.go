@@ -13,7 +13,7 @@ import (
 	"github.com/cesarvspr/golang-modules/sdk/client/products"
 )
 
-// Default of product API HTTP client.
+// Default g o l a n g m o d u l e s HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -28,14 +28,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"http"}
 
-// NewHTTPClient creates a new of product API HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *OfProductAPI {
+// NewHTTPClient creates a new g o l a n g m o d u l e s HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *GOLANGMODULES {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new of product API HTTP client,
+// NewHTTPClientWithConfig creates a new g o l a n g m o d u l e s HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *OfProductAPI {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *GOLANGMODULES {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -46,14 +46,14 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *OfP
 	return New(transport, formats)
 }
 
-// New creates a new of product API client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *OfProductAPI {
+// New creates a new g o l a n g m o d u l e s client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *GOLANGMODULES {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(OfProductAPI)
+	cli := new(GOLANGMODULES)
 	cli.Transport = transport
 	cli.Products = products.New(transport, formats)
 	return cli
@@ -98,15 +98,15 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// OfProductAPI is a client for of product API
-type OfProductAPI struct {
+// GOLANGMODULES is a client for g o l a n g m o d u l e s
+type GOLANGMODULES struct {
 	Products products.ClientService
 
 	Transport runtime.ClientTransport
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *OfProductAPI) SetTransport(transport runtime.ClientTransport) {
+func (c *GOLANGMODULES) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Products.SetTransport(transport)
 }

@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// UpdateProductUnprocessableEntityBody UpdateProductUnprocessableEntityBody update product unprocessable entity body
+// UpdateProductUnprocessableEntityBody UpdateProductUnprocessableEntityBody UpdateProductUnprocessableEntityBody UpdateProductUnprocessableEntityBody update product unprocessable entity body
 //
 // swagger:model UpdateProductUnprocessableEntityBody
 type UpdateProductUnprocessableEntityBody struct {
