@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/go-openapi/runtime/middleware"
+	corshandler "github.com/gorilla/handlers"
 
 	"github.com/cesarvspr/golang-modules/handlers"
 	"github.com/cesarvspr/golang-modules/product-api/data"
@@ -60,12 +61,15 @@ func main() {
 	opts := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
 	sh := middleware.Redoc(opts, nil)
 
+	// CORS
+	ch := corshandler.CORS(corshandler.AllowedOrigins([]string{"*"}))
+
 	getRouter.Handle("/docs", sh)
 	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
 
 	s := &http.Server{
 		Addr:         ":9001",
-		Handler:      sm,
+		Handler:      ch(sm),
 		IdleTimeout:  120 + time.Second,
 		ReadTimeout:  1 * time.Second,
 		WriteTimeout: 1 * time.Second,
