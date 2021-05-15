@@ -1,2 +1,7 @@
+src_git/imagestore/.keep
+src_git/imagestore/1/holding.png
+env/env.go
+
 /vendor
 /github.com
+/env
