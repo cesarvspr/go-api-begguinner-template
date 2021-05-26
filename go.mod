@@ -16,6 +16,7 @@ require (
 	github.com/google/go-cmp v0.5.5 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0
+	github.com/hashicorp/go-hclog v0.16.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/spf13/cobra v1.1.3 // indirect
