@@ -1,6 +1,12 @@
 package files
 
-import "path/filepath"
+import (
+	"io"
+	"os"
+	"path/filepath"
+
+	"golang.org/x/xerrors"
+)
 
 // Local is an implementation fo the storage interface which works with the
 // local disk on the currente machine
@@ -18,4 +24,68 @@ func NewLocal(basePath string, maxSize int) (*Local, error) {
 		return nil, err
 	}
 	return &Local{basePath: p}, nil
+}
+
+// Save the contenst of the writer to the given path
+// Path is a relative path, basePath will be appended
+func (l *Local) save(path string, contents io.Reader) error {
+	//get the full path for the file
+	fp := l.fullPath(path)
+
+	// get the directory and make sury it exists
+	d := filepath.Dir(fp)
+	err := os.Mkdir(d, os.ModePerm)
+	if err != nil {
+		return xerrors.Errorf("unable to create directory: %w", err)
+	}
+
+	// if the file exists delete it
+	_, err = os.Stat(fp)
+	if err == nil {
+		err = os.Remove(fp)
+		if err != nil {
+			return xerrors.Errorf("unable to delete the file: %w", err)
+		}
+
+	} else if !os.IsNotExist(err) {
+		// if this is anything other than a not exists error
+		return xerrors.Errorf("Unable to get file info: %w", err)
+	}
+
+	// create a new file at the path
+	f, err := os.Create(fp)
+	if err != nil {
+		return xerrors.Errorf("Unable write to file: %w", err)
+	}
+	defer f.Close()
+
+	//Write the contents to the new file
+	//ensure that we are not writing greater than max bytes
+	_, err = io.Copy(f, contents)
+	if err != nil {
+		return xerrors.Errorf("Unable to write to file: %w", err)
+	}
+
+	return nil
+}
+
+// Get the file at the given path and return a Reader
+// the calling function is responsible for closing the reader
+func (l *Local) Get(path string) (*os.File, error) {
+	//get the full path of the file
+	fp := l.fullPath(path)
+
+	// open the file
+	f, err := os.Open(fp)
+	if err != nil {
+		return nil, xerrors.Errorf("Unable to open file: %w", err)
+	}
+
+	return f, nil
+}
+
+//returns the absolute path
+func (l *Local) fullPath(path string) string {
+	//append the given path to the abse path
+	return filepath.Join(l.basePath, path)
 }
