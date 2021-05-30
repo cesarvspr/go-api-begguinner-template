@@ -1,4 +1,4 @@
-package files
+package files_sdk
 
 import (
 	"io"
@@ -28,7 +28,7 @@ func NewLocal(basePath string, maxSize int) (*Local, error) {
 
 // Save the contenst of the writer to the given path
 // Path is a relative path, basePath will be appended
-func (l *Local) save(path string, contents io.Reader) error {
+func (l *Local) Save(path string, contents io.Reader) error {
 	//get the full path for the file
 	fp := l.fullPath(path)
 
