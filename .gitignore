@@ -6,3 +6,6 @@ env/env.go
 /github.com
 /env
 cpuprofile
+images-server/imagestore/5/ksal.jpeg
+images-server/imagestore/2/download.jpeg
+images-server/imagestore/4/download.jpeg

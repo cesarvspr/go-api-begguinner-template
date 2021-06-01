@@ -9,6 +9,7 @@ import (
 
 	"github.com/cesarvspr/images-server/env"
 	"github.com/cesarvspr/images-server/files_sdk"
+	gohandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 
 	"github.com/cesarvspr/images-server/handlers"
@@ -46,6 +47,8 @@ func main() {
 	// create a new serve mux and register the handlers
 	sm := mux.NewRouter()
 
+	ch := gohandlers.CORS(gohandlers.AllowedOrigins([]string{"*"}))
+
 	// filename regex: {filename:[a-zA-Z]+\\.[a-z]{3}}
 	// problem with FileServer is that it is dumb
 	ph := sm.Methods(http.MethodPost).Subrouter()
@@ -61,7 +64,7 @@ func main() {
 	// create a new server
 	s := http.Server{
 		Addr:         *bindAddress,      // configure the bind address
-		Handler:      sm,                // set the default handler
+		Handler:      ch(sm),            // set the default handler
 		ErrorLog:     sl,                // the logger for the server
 		ReadTimeout:  5 * time.Second,   // max time to read request from the client
 		WriteTimeout: 10 * time.Second,  // max time to write response to the client
