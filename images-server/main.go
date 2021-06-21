@@ -34,16 +34,16 @@ func main() {
 	sl := l.StandardLogger(&hclog.StandardLoggerOptions{InferLevels: true})
 
 	//create the storage classs, use local storage
-	// max filesize 5MB
+	// max filesize 5MB-
 	stor, err := files_sdk.NewLocal(*basePath, 1024*1000*5)
 	if err != nil {
-		l.Error("unable to create storagete", "error", err)
+		l.Error("unable to create storage", "error", err)
 		os.Exit(1)
 	}
 
 	// create the handlers
 	fh := handlers.NewFiles(stor, l)
-
+	mw := handlers.GzipHandler{}
 	// create a new serve mux and register the handlers
 	sm := mux.NewRouter()
 
@@ -60,6 +60,7 @@ func main() {
 		"/images/{id:[0-9]+}/{filename:[a-zA-Z]+\\.[a-z]{3}}",
 		http.StripPrefix("/images/", http.FileServer(http.Dir(*basePath))),
 	)
+	gh.Use(mw.GzipMiddleware)
 
 	// create a new server
 	s := http.Server{
