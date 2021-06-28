@@ -6,4 +6,4 @@ git clone https://github.com/cesarvspr/golang-modules
 
 go build 
 
-do run . 
+go run . 
